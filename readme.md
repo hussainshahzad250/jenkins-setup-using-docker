@@ -3,17 +3,13 @@
 For the full 1 hour course watch on youtube:
 https://www.youtube.com/watch?v=6YZvp2GwT0A
 
-# Installation
-## Build the Jenkins BlueOcean Docker Image (or pull and use the one I built)
+# Jenkins setup using docker image
+## Build the Jenkins BlueOcean Docker Image
 ```
-docker build -t myjenkins-blueocean:2.414.2 .
-
-#IF you are having problems building the image yourself, you can pull from my registry (It is version 2.332.3-1 though, the original from the video)
-
-docker pull devopsjourney1/jenkins-blueocean:2.332.3-1 && docker tag devopsjourney1/jenkins-blueocean:2.332.3-1 myjenkins-blueocean:2.332.3-1
+docker build -t myjenkins:1.0 .
 ```
 
-## Create the network 'jenkins'
+## Create the network jenkins
 ```
 docker network create jenkins
 ```
@@ -27,7 +23,7 @@ docker run --name jenkins-blueocean --restart=on-failure --detach \
   --publish 8080:8080 --publish 50000:50000 \
   --volume jenkins-data:/var/jenkins_home \
   --volume jenkins-docker-certs:/certs/client:ro \
-  myjenkins-blueocean:2.414.2
+  myjenkins:1.0
 ```
 
 ### Windows
@@ -37,7 +33,7 @@ docker run --name jenkins-blueocean --restart=on-failure --detach `
   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 `
   --volume jenkins-data:/var/jenkins_home `
   --volume jenkins-docker-certs:/certs/client:ro `
-  --publish 8080:8080 --publish 50000:50000 myjenkins-blueocean:2.414.2
+  --publish 8080:8080 --publish 50000:50000 myjenkins:1.0
 ```
 
 
@@ -63,7 +59,7 @@ docker run -d --restart=always -p 127.0.0.1:2376:2375 --network jenkins -v /var/
 docker inspect <container_id> | grep IPAddress
 ```
 
-## Using my Jenkins Python Agent
+## Add `requirement.txt` using below command
 ```
-docker pull devopsjourney1/myjenkinsagents:python
+pip freeze > requirement.txt
 ```
